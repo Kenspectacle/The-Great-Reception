@@ -1,11 +1,18 @@
-import QuestionLine from "./QuestionLine.jsx"
-import TextLine from "./TextLine.jsx";
+import React, { useState } from 'react';
+import QuestionLine from "./QuestionLine.jsx";
 
-export default function QuestionBlockLine( { questionLine, questionType }) {
+export default function QuestionBlockLine({ questionLine, questionType, onAnswerUpdate }) {
+    const [answer, setAnswer] = useState("");
+
+    const handleInputChange = (e) => {
+        setAnswer(e.target.value);
+        onAnswerUpdate(questionLine, e.target.value);
+    };
 
     return (
         <>
-            <QuestionLine questionLine={questionLine} /> <TextLine questionType={questionType}/>
+            <QuestionLine questionLine={questionLine} />
+            <input type={questionType === "number" ? "number" : "text"} value={answer} onChange={handleInputChange} />
         </>
     );
 }
