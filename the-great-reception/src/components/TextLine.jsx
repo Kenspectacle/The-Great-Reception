@@ -1,8 +1,8 @@
-export default function TextLine ( { textQuestion }) {
+export default function TextLine ( { questionType }) {
 
     return (
         <>
-            <input type="{textQuestion}" className="form-control form-inline" id="exampleInputEmail1" ariaDescribedBy="emailHelp" placeholder="Enter Answer" />
+            <input type={questionType} className="form-control form-inline" id="exampleInputEmail1" ariaDescribedBy="emailHelp" placeholder="Enter Answer" />
         </>
     );
 }

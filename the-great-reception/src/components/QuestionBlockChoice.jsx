@@ -1,12 +1,14 @@
 import QuestionLine from "./QuestionLine.jsx"
-
+import { useState } from 'react';
 
 
 function ButtonChoice( { choices }) {
     return (
         <div>
             {choices.map((choice, index) => (
-                <button key={index}>{choice}</button>
+                <button key={index} onClick>
+                    {choice}
+                </button>
             ))}
         </div>
     );
@@ -20,7 +22,7 @@ export default function QuestionBlockChoice( { question }) {
         <>
             <QuestionLine questionLine={question.questionLine} />
         
-            <form action="GET">
+            <form>
                 <ButtonChoice choices={question.questionChoices}/>
             </form>
         </>
