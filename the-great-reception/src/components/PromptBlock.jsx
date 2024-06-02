@@ -40,8 +40,11 @@ export default function PromptBlock() {
                 const responseData = await response.json();
                 //  ToDo Savce recipe in database  
                 // Route
-                console.log('Response:', responseData);
-                window.location.href = '/recipe';
+                let res = JSON.stringify(responseData.output)
+                console.log('Response:', res);
+                // const queryString = new URLSearchParams(responseData.output).toString();
+                // console.log('querystring:', queryString);
+                window.location.href = '/recipe?' + res;
             } else {
                 console.error('Failed to send data:', response.statusText);
             }
