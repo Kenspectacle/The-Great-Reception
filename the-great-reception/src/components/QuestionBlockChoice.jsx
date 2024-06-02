@@ -1,8 +1,6 @@
+import QuestionLine from "./QuestionLine.jsx"
 
 
-function QuestionLine( { questionLine }) {
-    return <h2>{questionLine}</h2>;
-}
 
 function ButtonChoice( { choices }) {
     return (
