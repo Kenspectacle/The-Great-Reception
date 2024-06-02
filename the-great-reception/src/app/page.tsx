@@ -1,6 +1,6 @@
 import Navbar from '../components/Navbar';
 import Footer from "../components/Footer";
-import RedirectButton from "../components/RedirectButton";
+import RedirectSection from "../components/RedirectSection";
 
 import './home.css'
 import 'bootstrap/dist/css/bootstrap.css';
@@ -28,7 +28,7 @@ export default function Home() {
         </div>
       </header>
 
-      <RedirectButton buttonLink={"/recipemaker"} buttonDescription={"Click here to start!"}/>
+      <RedirectSection buttonLink={"/recipemaker"} buttonDescription={"Click here to start!"}/>
 
       <section className="page-section bg-primary text-white mb-0" id="about">
             <div className="container">
