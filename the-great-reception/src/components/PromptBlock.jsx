@@ -26,12 +26,10 @@ export default function PromptBlock() {
     const dataToSend = {
       input: answers,
     };
-    dataToSend["input"]["description"] +=
-      ". Please return your answer formatted as valid html code. Dont append anything before or after the html code!";
     console.log(dataToSend);
     try {
       const response = await fetch(
-        "https://api.runpod.ai/v2/eh1qxewo5878f2/runsync",
+        "https://api.runpod.ai/v2/myoxqxv0mw5osj/runsync",
         {
           method: "POST",
           headers: {
