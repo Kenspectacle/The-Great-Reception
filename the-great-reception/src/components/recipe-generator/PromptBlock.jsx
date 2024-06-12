@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import QuestionBlockChoice from "./QuestionBlockChoice.jsx";
 import QuestionBlockLine from "./QuestionBlockLine.jsx";
