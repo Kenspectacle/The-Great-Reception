@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
 
 interface jsonRecipePrompt {
-  data: any;
+  json_recipe: any;
 }
 
-const RecipeStream: React.FC<jsonRecipePrompt> = ({ data }) => {
+const RecipeStream: React.FC<jsonRecipePrompt> = ({ json_recipe }) => {
   const [htmlContent, setHtmlContent] = useState("");
-  const proxyUrl = "/api/runpod_proxy";
-  // const streamProxyUrl = "/api/runpod_stream";
-  const streamProxyUrl = "/api/runpod_test";
+  const runpod_api_url =
+    "/api/runpod_proxy?data=" + JSON.stringify(json_recipe);
 
   const hasFetchedRef = useRef(false);
 
@@ -19,38 +17,33 @@ const RecipeStream: React.FC<jsonRecipePrompt> = ({ data }) => {
 
     const fetchJobIdAndStreamResponse = async () => {
       try {
-        const response = await axios.post(proxyUrl, { input: data });
+        const eventSource = new EventSource(runpod_api_url);
 
-        const jobId = response.data.id;
-        const streamUrl = `${streamProxyUrl}?jobId=${jobId}`;
+        eventSource.onmessage = (event) => {
+          if (event.data === "[DONE]") {
+            eventSource.close();
+          } else if (event.data === "[ERROR]") {
+            console.error("Error streaming job output");
+            eventSource.close();
+          } else {
+            setHtmlContent((prevContent) => prevContent + event.data);
+          }
+        };
 
-        const response2 = await axios.post(streamUrl);
-
-        // const eventSource = new EventSource(streamUrl);
-
-        // eventSource.onmessage = (event) => {
-        //   console.log(event.data);
-        //   const data = JSON.parse(event.data);
-        //   if (data.o) {
-        //     setHtmlContent((prevContent) => prevContent + data.o);
-        //   }
-        // };
-
-        // eventSource.onerror = (error) => {
-        //   console.error("EventSource failed:", error);
-        //   eventSource.close();
-        // };
+        eventSource.onerror = (error) => {
+          console.error("EventSource failed:", error);
+          eventSource.close();
+        };
       } catch (error) {
         console.error("Error fetching job ID or streaming response:", error);
       }
     };
 
     fetchJobIdAndStreamResponse();
-  }, [data]);
+  }, [json_recipe]);
 
   return (
     <div>
-      <h1>Recipe Streaming</h1>
       <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
     </div>
   );

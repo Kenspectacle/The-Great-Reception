@@ -101,8 +101,7 @@ export default function RecipeMaker() {
       ingredient_restrictions,
       additional_notes,
     };
-    console.log(JSON.stringify(formData));
-    setJsonData(formData);
+    setJsonData(JSON.stringify(formData));
   };
 
   return (
@@ -277,7 +276,7 @@ export default function RecipeMaker() {
           </div>
         </form>
 
-        <div>{jsonData && <DisplayJsonData data={jsonData} />}</div>
+        <div>{jsonData && <DisplayJsonData json_recipe={jsonData} />}</div>
       </div>
     </>
   );
