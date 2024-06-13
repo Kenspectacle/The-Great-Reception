@@ -23,9 +23,9 @@ export default async function handler(req, res) {
         input: JSON.parse(parsedPrompt),
       };
 
-      // console.log(">>> ", payload);
-
+      console.log("Submitting job with payload:", JSON.stringify(payload));
       const response = await axios.post(url, payload, { headers });
+      console.log("Job submission response:", response.data);
 
       if (response.status !== 200) {
         console.error(`Error submitting job: ${response.data}`);
@@ -78,9 +78,7 @@ export default async function handler(req, res) {
         }
       }
     } catch (error) {
-      console.error(
-        `An error occurred while streaming output: ${error.message}`
-      );
+      console.error("Error in submitJobAndStreamOutput:", error);
       res.write("data: [ERROR]\n\n");
       res.end();
     }
