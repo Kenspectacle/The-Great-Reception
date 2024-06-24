@@ -1,4 +1,17 @@
 {
+  "version": 2,
+  "builds": [
+    {
+      "src": "the-great-reception/package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "the-great-reception/$1"
+    }
+  ],
   "functions": {
     "api/runpod_proxy": {
       "maxDuration": 120
