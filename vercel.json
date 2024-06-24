@@ -13,7 +13,7 @@
     }
   ],
   "functions": {
-    "api/runpod_proxy": {
+    "api/**": {
       "maxDuration": 120
     }
   }
