@@ -2,6 +2,7 @@
 
 import React, { useState, ChangeEvent, KeyboardEvent } from "react";
 import DisplayJsonData from "./RecipeStream";
+import ModelLoader from "./ModelLoader";
 
 import "bootstrap/dist/css/bootstrap.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -87,6 +88,8 @@ export default function RecipeMaker() {
   const [ingredient_mandatory, setMustHaveIngredients] = useState<string[]>([]);
   const [ingredient_restrictions, setNoNoIngredients] = useState<string[]>([]);
   const [additional_notes, setAdditionalNotes] = useState<string>("");
+
+  const [modelStatus, setModelStatus] = useState("waiting");
 
   const [jsonData, setJsonData] = useState<any>(null);
 
@@ -265,7 +268,23 @@ export default function RecipeMaker() {
 
           {/* ACTION BUTTON */}
 
-          <div className="d-flex justify-content-center mb-4">
+          {(modelStatus === "waiting" || modelStatus === "error") && (
+            <ModelLoader setStatusParent={setModelStatus} />
+          )}
+
+          {modelStatus === "success" && (
+            <div className="d-flex justify-content-center mb-4">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleSubmit}
+              >
+                Create the Recipe
+              </button>
+            </div>
+          )}
+
+          {/* <div className="d-flex justify-content-center mb-4">
             <button
               type="button"
               className="btn btn-primary"
@@ -273,7 +292,7 @@ export default function RecipeMaker() {
             >
               Create the Recipe
             </button>
-          </div>
+          </div> */}
         </form>
 
         <div>{jsonData && <DisplayJsonData json_recipe={jsonData} />}</div>
